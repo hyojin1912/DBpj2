@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+    <script>
+        $.fn.api.settings.api = {
+
+            'search order by nation': '/search_nation.api'
+        };
+    </script>
+
+    <style>
+
+        body {
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h4 class="ui dividing header">nation</h4>
+
+    <!-- method = post, action = /search.api 넣지 말기-->
+    <form class="ui form">
+        <div class="grouped fields">
+            <label class="ui blue label">nation 국가</label>
+
+            <div class="ui grid">
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="Korea">
+                            <label>Korea</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="America">
+                            <label>US</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="France">
+                            <label>France</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="Canada">
+                            <label>Canada</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui center aligned segment">
+            <button type="button" class="ui blue select button" id="btn_validate">수량 검색</button>
+        </div>
+    </form>
+
+    <!-- nation inventory table -->
+    <br><br><br>
+    <table class="ui alligned celled table" id='nationtable'>
+        <label class="ui blue label">current nation's inventory</label>
+        <thead>
+            <tr>
+                <th>Nation</th>
+                <th>sonata</th>
+                <th>granger</th>
+                <th>i40</th>
+                <th>avante</th>
+            </tr>
+        </thead>
+
+        <!-- factory manufacturing table -->
+        <table class="ui alligned celled table" id='factorytable'>
+            <label class="ui blue label">queue in factory's manufacturing</label>
+            <thead>
+                <tr>
+                    <th>Nation</th>
+                    <th>sonata</th>
+                    <th>granger</th>
+                    <th>i40</th>
+                    <th>avante</th>
+                </tr>
+            </thead>
+</body>
+
+<script>
+    $("#btn_validate")
+        .api({
+            action: 'search order by nation',
+            method: 'POST',
+            serializeForm: true,
+
+            onSuccess: function (response) {
+                alert('success');
+                console.log(response);
+                $('#nationtable').children().remove();
+                $('#factorytable').children().remove();
+                var tbl_subject = "<thead>" + "<tr>" + "<th>" + "Nation" + "</th>" + "<th>" + "Sonata" + "</th>" + "<th>" + "Granger" + "</th>" + "<th>" + "i40" + "</th>" + "<th>" + "avante" + "</th>" + "</tr>" + "</thead>"
+                $(tbl_subject).appendTo('#nationtable');
+                $(tbl_subject).appendTo('#factorytable');
+                $.each(response.nation, function (i, f) {
+                    var tblRow = "<tr>" + "<td>" + f.n_id + "</td>" +
+                        "<td>" + f.n_carmodel1 + "</td>" + "<td>" + f.n_carmodel2 + "</td>" + "<td>" + f.n_carmodel3 + "</td>" +
+                        "<td>" + f.n_carmodel4 + "</td>" + "</tr>"
+                    $(tblRow).appendTo("#nationtable");
+                });
+
+
+
+                $.each(response.factory, function (i, f) {
+                    var facRow = "<tr>" + "<td>" + f.f_nation + "</td>" +
+                        "<td>" + f.f_carmodel1 + "</td>" + "<td>" + f.f_carmodel2 + "</td>" + "<td>" + f.f_carmodel3 + "</td>" +
+                        "<td>" + f.f_carmodel4 + "</td>" + "</tr>"
+                    $(facRow).appendTo("#factorytable");
+                });
+            },
+            onFailure: function (response) {
+                alert('failure');
+                console.log(response);
+            }
+        });
+
+</script>
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

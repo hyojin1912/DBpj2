@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <style>
+        body {
+            padding: 1rem;
+        }
+    </style>
+
+    <script>
+        $.fn.api.settings.api = {
+
+            'order': '/order'
+        };
+    </script>
+</head>
+
+<body>
+
+    <form class="ui form">
+        <h4 class="ui dividing header">input your Information</h4>
+
+        <div class="field">
+            <label>SA_code</label>
+            <input type="text" name="sa_code" placeholder="SA_code...">
+        </div>
+        <!--<div class="field">
+                    <label>SA_nation</label>
+                    <input type="text" name="sa_nation" placeholder="SA_nation...">
+            </div>
+            <div class="field">
+                    <label>SA_address</label>
+                    <input type="text" name="sa_address" placeholder="SA_address...">
+            </div>-->
+
+
+        <p></p>
+
+        <div class="ui form">
+            <div class="grouped fields">
+                <label class="ui blue label">what car do you want to order?</label>
+                <div class="ui grid">
+                    <div class="four wide column">
+                        <div class="field">
+                            <label class="ui blue center fluid label">sonata</label>
+   
+                            <div class="field">
+                                order_number
+                                <input type="text" name="model1_number" placeholder="order_number...">
+                            </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="four wide column">
+                        <div class="field">
+                            <!--<div class="ui checkbox">-->
+                            <!--<input type="checkbox" name="model2" >-->
+                            <label class="ui blue center fluid label">granger</label>
+
+                            <div class="field">
+                                order_number
+                                <input type="text" name="model2_number" placeholder="order_number...">
+                            </div>
+                            <!--</div>-->
+                        </div>
+                    </div>
+                    <div class="four wide column">
+                        <div class="field">
+                            <!--<div class="ui checkbox">-->
+                            <!--<input type="checkbox" name="model3">-->
+                            <label class="ui blue center fluid label">i40</label>
+  
+                            <div class="field">
+                                order_number
+                                <input type="text" name="model3_number" placeholder="order_number...">
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <div class="four wide column">
+                        <div class="field">
+                            <!--<div class="ui checkbox">-->
+                            <!--<input type="checkbox" name="model4" >-->
+                            <label class="ui blue center fluid label">avante</label>
+                            <div class="field">
+                                order_number
+                                <input type="text" name="model4_number" placeholder="order_number...">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="ui huge primary basic button" id="order"> 주문하기 </button>
+
+    </form>
+
+    <script>
+        $("#order")
+            .api({
+                action: 'order',
+                method: 'POST',
+                serializeForm: true,
+
+                onSuccess: function (res) {
+                    console.log(res);
+                    var a = res.response;
+                    console.log(a);
+                    alert(a);
+                },
+
+                onfailure: function (response) {
+                    alert('request failure, try again');
+                }
+            });
+    </script>
+
+
+</body>
+
+
+
+
+
+
+
+
+</html>

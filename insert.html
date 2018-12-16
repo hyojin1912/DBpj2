@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <style>
+            
+            body{padding:1rem;}
+        
+        </style>
+    </head>
+    
+    <body>
+        <div  class="ui dividing header">
+            <h4>새 대리점 만들기</h4>
+        </div>
+
+        <div class="ui center aligned segment">
+            <form action="/agency_insert" method="post">
+                <p><div class="ui input focus"> SA_CODE  <input type="text" name="sa_code" placeholder="input SA_CODE..."></div></p>
+                <p><div class="ui input focus"> SA_PWD <input type="text" name="sa_pwd" placeholder="input SA_PWD..."></div></p>
+                <p><div class="ui input focus"> SA_ADDR <input type="text" name="sa_address" placeholder="input SA_address..."></div></p>
+                <p><div class="ui input focus"> SA_SALARY <input type="text" name="sa_salary" placeholder="input salary..."></div></p>
+
+                <button type="submit" class="ui huge primary basic button">  만들기 </button>
+            </form>
+        </div>
+
+
+
+
+    </body>
+
+</html>
+
+
+
+
+
+
+

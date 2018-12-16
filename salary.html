@@ -1,0 +1,120 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+	<title>Select only one checkbox at time</title>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+        <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+        <script>
+            $.fn.api.settings.api = {
+              'max salary' : '/search_salary'
+            };
+        </script>
+        
+        <style>
+            
+            body{padding:1rem;}
+        
+        </style>
+
+</head>
+
+
+<body>
+
+    <h4 class="ui dividing header">연봉검색</h4>
+    <form class="ui form">
+        <div class="grouped fields">
+            <div class="ui grid">
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input value="1" name="Korea" class="subject-list" type="checkbox">
+                            <label>한국</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input value="1" name="America" class="subject-list" type="checkbox">
+                            <label>미국</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+
+                            <input value="1" name="France" class="subject-list" type="checkbox">
+                            <label>프랑스</label>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+
+                            <input value="1" name="Canada" class="subject-list" type="checkbox">
+                            <label>캐나다</label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui center aligned segment">
+            <button type="button" class="ui blue button" id="salary"> 연봉 검색</button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $('.subject-list').on('change', function () {
+            $('.subject-list').not(this).prop('checked', false);
+        });
+    </script>
+
+    <table class="ui alligned celled table" id='most_sell_table'>
+        <thead>
+            <tr>
+                <th>nation</th>
+                <th>sa_code</th>
+                <th>salary </th>
+            </tr>
+        </thead>
+    </table>
+</body>
+    <!-- // button for find sa_code getting more salary -->
+
+
+<script>
+    $("#salary")
+        .api({
+            action: 'max salary',
+            method: 'POST',
+            serializeForm: true,
+
+            onSuccess: function (response) {
+                alert('success');
+                console.log(response);
+                $('#most_sell_table').children().remove();
+                var tbl_subject = "<thead>" + "<tr>" + "<th>" + "nation" + "</th>" + "<th>" + "sa code" + "</th>" + "<th>" + "salary" + "</th>" + "</tr>" + "</thead>"
+                $(tbl_subject).appendTo('#most_sell_table');
+
+                $.each(response.salary_list, function (i, f) {
+                    var tblRow = "<tr>" + "<td>" + f.sa_nation + "</td>" +
+                        "<td>" + f.sa_code + "</td>" + "<td>" + f.sa_salary + "</tr>"
+                    $(tblRow).appendTo('#most_sell_table');
+                });
+            }
+
+        });
+</script>
+
+</html>

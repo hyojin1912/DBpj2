@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <style>
+
+        body {
+            padding: 1rem;
+        }
+    </style>
+
+    <script>
+        $.fn.api.settings.api = {
+            'sell': '/most_sell'
+        };
+    </script>
+
+</head>
+<body>
+    <div class="ui dividing header">
+        <h4>Home</h4>
+        <div class="ui right aligned segment">
+
+            <div class="ui grid">
+
+                <div class="eight wide column">
+                    <p></p>
+                </div>
+                <div class="eight wide column">
+                    <div class="ui segment">
+                        <div class="ui two column grid">
+
+                            <div class="column">
+                                <form class="form-inline" action="/agency_insert" method="get">
+                                    <a href=""><button class="ui primary button">대리점 추가하기(make new sa_code) </button></a>
+                                </form>
+                            </div>
+                            <div class="column">
+                                <form class="form-inline" action="/agency_delete" method="get">
+                                    <a href=""><button class="ui primary button">대리점 삭제하기( delete used sa_code) </button></a>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="ui grid">
+        <div class="five wide column">
+            <div class="ui segment">
+                <form class="form-inline" action="/nation" method="get">
+                    <a href=""><button class="ui primary button">nation</button></a>
+                </form>
+                <p></p>
+                <div>Korea</div>
+                <div>America</div>
+                <div>France</div>
+                <div>Canada</div>
+            </div>
+        </div>
+        <div class="five wide column">
+            <div class="ui segment">
+                <form class="form-inline" action="/order_list" method="get">
+                    <a href=""><button class="ui primary button" id="order_list">order list</button></a>
+                </form>
+                <p> order list </p>
+            </div>
+        </div>
+        <div class="five wide column">
+            <div class="ui segment">
+                <form class="form-inline" action="/salary" method="get">
+                    <a href=""><button class="ui primary button">salary</button></a>
+                </form>
+                <p> search getting large salary sa</p>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="ui dividing header">인기 대리점 찾기</h4>
+    <form class="ui form">
+
+        <div class="grouped fields">
+            <label class="ui blue label">nation 국가</label>
+
+            <div class="ui grid">
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input value="1" name="Korea" class="subject-list" type="checkbox">
+                            <label>한국</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input value="1" name="America" class="subject-list" type="checkbox">
+                            <label>미국</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input value="1" name="France" class="subject-list" type="checkbox">
+                            <label>프랑스</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="four wide column">
+                    <div class="field">
+                        <div class="ui checkbox">
+                            <input value="1" name="Canada" class="subject-list" type="checkbox">
+                            <label>캐나다</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui center aligned segment">
+            <button type="button" class="ui blue button" id="sell">수량 검색</button>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $('.subject-list').on('change', function () {
+            $('.subject-list').not(this).prop('checked', false);
+        });
+    </script>
+
+    <!-- 인기대리점 Column 1.차종류 2. sa_code, 3. 판매한 차 대수> -->
+    <table class="ui alligned celled table" id='most_sell_table'>
+        <thead>
+            <tr>
+                <th>car model</th>
+                <th>sa code</th>
+                <th>the number of sold car</th>
+            </tr>
+        </thead>
+    </table>
+</body>
+<!-- button for earch most sell sa -->
+<script>
+    $("#sell")
+        .api({
+            action: 'sell',
+            method: 'POST',
+            serializeForm: true,
+
+            onSuccess: function (response) {
+                alert('success');
+                console.log(response);
+                $('#most_sell_table').children().remove();
+                var tbl_subject = "<thead>" + "<tr>" + "<th>" + "car model" + "</th>" + "<th>" + "sa code" + "</th>" + "<th>" + "the number of sold car" + "</th>" + "</tr>" + "</thead>"
+                $(tbl_subject).appendTo('#most_sell_table');
+
+                $.each(response.sonata, function (i, f) {
+                    var tblRow = "<tr>" + "<td>" + "sonata" + "</td>" +
+                        "<td>" + f.sa_code + "</td>" + "<td>" + f.sum1 + "</td>" + "</tr>"
+                    $(tblRow).appendTo('#most_sell_table');
+                });
+
+                $.each(response.granger, function (i, f) {
+                    var tblRow = "<tr>" + "<td>" + "granger" + "</td>" +
+                        "<td>" + f.sa_code + "</td>" + "<td>" + f.sum2 + "</td>" + "</tr>"
+                    $(tblRow).appendTo('#most_sell_table');
+                });
+
+                $.each(response.i40, function (i, f) {
+                    var tblRow = "<tr>" + "<td>" + "i40" + "</td>" +
+                        "<td>" + f.sa_code + "</td>" + "<td>" + f.sum3 + "</td>" + "</tr>"
+                    $(tblRow).appendTo('#most_sell_table');
+                });
+
+                $.each(response.avante, function (i, f) {
+                    var tblRow = "<tr>" + "<td>" + "avante" + "</td>" +
+                        "<td>" + f.sa_code + "</td>" + "<td>" + f.sum4 + "</td>" + "</tr>"
+                    $(tblRow).appendTo('#most_sell_table');
+                });
+            }
+        });
+</script>
+
+</html>

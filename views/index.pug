@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css')
+    script(src='https://code.jquery.com/jquery-3.1.1.min.js', integrity='sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js')
+    style.
+      body {
+      padding: 1rem;
+      }
+    body
+    br
+    br
+    br
+    label.ui.blue.label current order_list
+    table#orderlist_table.ui.alligned.celled.table
+        thead
+            tr
+                th order_list_id
+                th sa_code
+                th sonata
+                th granger
+                th i40
+                th avante
+        tbody
+            each row in orderlist
+                tr
+                  td #{row.orderlist_id}
+                  td #{row.osa_code}
+                  td #{row.order_model1}
+                  td #{row.order_model2}
+                  td #{row.order_model3}
+                  td #{row.order_model4}
